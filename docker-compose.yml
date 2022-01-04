@@ -10,5 +10,3 @@ services:
             - .:/var/www/app
             - ./bootstrap/app.conf:/etc/nginx/sites-available/default
         command: bash -c "php-fpm"
-        depends_on:
-            - database
