@@ -2,20 +2,21 @@
 
 namespace Database\Factories;
 
+use App\Models\Desk;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class DeskFactory extends Factory
+class CardFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array
      */
-    public function definition(): array
+    public function definition()
     {
         return [
-            'title' => $this->faker->name,
-            'user_id' => $this->faker->numberBetween(1,2)
+            'title'   => $this->faker->name,
+            'desk_id' => Desk::inRandomOrder()->first()->id,
         ];
     }
 }

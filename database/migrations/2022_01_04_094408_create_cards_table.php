@@ -1,11 +1,11 @@
 <?php
 
-use App\Models\User;
+use App\Models\Desk;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDesksTable extends Migration
+class CreateCardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,11 @@ class CreateDesksTable extends Migration
      */
     public function up()
     {
-        Schema::create('desks', function (Blueprint $table) {
+        Schema::create('cards', function (Blueprint $table) {
             $table->id();
 
             $table->string('title');
-            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Desk::class)->constrained()->cascadeOnDelete();
 
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ class CreateDesksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('desks');
+        Schema::dropIfExists('cards');
     }
 }

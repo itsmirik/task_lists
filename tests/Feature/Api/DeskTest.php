@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Api;
 
-use App\Models\Desk;
+use App\Models\User;
 use Tests\TestCase;
 
 class DeskTest extends TestCase
@@ -10,27 +10,45 @@ class DeskTest extends TestCase
     /**
      * @test
      */
-    public function show_all_desks()
+    public function show_all_user_desks()
     {
-        Desk::factory()->make();
+        $this->actingAs(User::first());
 
         $this->getJson(route('desks.index'))
             ->assertOk()
-            ->assertSee([
-                'id' => 1
-            ]);
+            ->assertSee(auth()->user()->desks->first()->title);
     }
 
     /**
      * @test
      */
 
-    public function create_a_desk()
+    public function user_can_create_a_desk()
     {
-        $desk = Desk::factory()->make()->toArray();
+        $this->actingAs(User::first());
+
+        $desk = auth()->user()->desks()->make([
+            'title' => 'new desk'
+        ])->toArray();
 
         $this->postJson(route('desks.store'), $desk)->assertCreated();
 
         $this->assertDatabaseHas('desks', $desk);
+    }
+
+    /**
+     * @test
+     */
+    public function show_a_authenticated_user_desk()
+    {
+        $this->actingAs(User::first());
+
+        $developer = User::whereName('Developer')->get();
+
+        $desk = auth()->user()->desks->first();
+
+        $this->getJson(route('desks.show', $desk->id))->assertOk()->assertSee($desk->title);
+
+        $this->assertNotEquals($developer->first()->desks->first()->id, $desk->id);
     }
 }
