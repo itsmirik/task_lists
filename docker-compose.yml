@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+    app:
+        container_name: app
+        image: lazerg/laravel:latest
+        ports:
+            - 80:80
+        volumes:
+            - .:/var/www/app
+            - ./bootstrap/app.conf:/etc/nginx/sites-available/default
+        command: bash -c "php-fpm"
+        depends_on:
+            - database
