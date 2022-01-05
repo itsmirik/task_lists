@@ -23,6 +23,8 @@ class AuthController extends Controller
 
     public function login(Request $request): RedirectResponse
     {
+        if (Auth::check()) return Redirect::route('dashboard');
+
         $data = $request->validate([
             'email'    => 'required|exists:users',
             'password' => 'required',

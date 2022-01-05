@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\DeskController;
-use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::group([
     'as' => 'auth.',
 ], function () {
@@ -31,15 +30,11 @@ Route::group([
         ->middleware('auth');
 });
 
+Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
+    Route::get('/', HomeController::class)->name('dashboard');
 
-Route::group([
-    'middleware' => 'auth'
-], function () {
-    // Home page
-    Route::get('/dashboard', HomeController::class)->name('dashboard');
-
-    Route::apiResources([
+    Route::resources([
         'desks'       => DeskController::class,
-        'desks.cards' => CardController::class
+//        'desks.cards' => CardController::class
     ]);
 });

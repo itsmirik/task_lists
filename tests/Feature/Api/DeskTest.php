@@ -28,10 +28,10 @@ class DeskTest extends TestCase
         $this->actingAs(User::first());
 
         $desk = auth()->user()->desks()->make([
-            'title' => 'new desk'
+            'title' => 'test desk'
         ])->toArray();
 
-        $this->postJson(route('desks.store'), $desk)->assertCreated();
+        $this->postJson(route('desks.store'), $desk)->assertRedirect(route('desks.index'));
 
         $this->assertDatabaseHas('desks', $desk);
     }
