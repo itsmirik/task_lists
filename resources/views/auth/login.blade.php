@@ -1,3 +1,4 @@
+{{--
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,6 +78,13 @@
 
 </body>
 </html>
+--}}
 
+<form action="{{route('auth.login-action')}}" method="post">
+    @csrf
+    <input type="email" name="email">
 
+    <input type="password" name="password">
 
+    <button type="submit">login</button>
+</form>

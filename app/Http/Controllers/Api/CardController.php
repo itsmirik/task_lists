@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Card;
 use App\Models\Desk;
 use Illuminate\Http\Request;
 use LaravelIdea\Helper\App\Models\_IH_Card_C;
+use function auth;
 
 class CardController extends Controller
 {

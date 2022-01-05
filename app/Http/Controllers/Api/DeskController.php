@@ -1,19 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Desk;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use LaravelIdea\Helper\App\Models\_IH_Desk_C;
 
 class DeskController extends Controller
 {
     /**
-     * @return _IH_Desk_C|Desk[]
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): Application|Factory|View
     {
-        return Desk::latest()->get();
+        $desks = Desk::latest()->get();
+        return view('dashboard.desks', compact('desks'));
     }
 
     /**
