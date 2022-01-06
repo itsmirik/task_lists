@@ -5,7 +5,7 @@ services:
         container_name: app
         image: lazerg/laravel:latest
         ports:
-            - "80:80"
+            - "8080:8080"
         volumes:
             - .:/var/www/app
             - ./bootstrap/app.conf:/etc/nginx/sites-available/default
