@@ -50,4 +50,30 @@ class TaskTest extends TestCase
 
         $this->assertDatabaseHas('tasks', $task);
     }
+
+    /**
+     * @test
+     */
+    public function authenticated_user_can_view_a_task()
+    {
+        $user = User::first();
+
+        $developer_task = User::whereName('Developer')->first()->desks->first()->cards()->first()->tasks->first();
+
+        $this->actingAs($user);
+
+        $this->assertAuthenticatedAs($user);
+
+        $desk = $user->desks->first();
+        $card = $desk->cards()->first();
+        $task = $card->tasks->first();
+        $this->getJson(route('desks.cards.tasks.show', [
+            $desk->id,
+            $card->id,
+            $task->id
+        ]))->assertSee($task->title)->assertOk();
+
+        $this->assertNotEquals($task->id, $developer_task->id);
+
+    }
 }
