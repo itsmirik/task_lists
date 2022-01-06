@@ -10,7 +10,7 @@ class DeskTest extends TestCase
     /**
      * @test
      */
-    public function show_all_user_desks()
+    public function authenticated_user_can_view_own_desks()
     {
         $this->actingAs(User::first());
 

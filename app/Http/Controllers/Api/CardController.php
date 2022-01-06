@@ -31,10 +31,10 @@ class CardController extends Controller
     /**
      * @param Desk $desk
      * @param Card $card
-     * @return Desk|null
+     * @return _IH_Card_C|Card[]
      */
-    public function show(Desk $desk, Card $card): ?Desk
+    public function show(Desk $desk, Card $card)
     {
-        return auth()->user()->desks()->whereId($desk->id)->get()->first();
+        return auth()->user()->desks()->whereId($desk->id)->first()->cards()->whereId($card->id)->get();
     }
 }

@@ -2,10 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Card;
-use App\Models\Desk;
-use App\Models\User;
-use Hash;
+use App\Models\Task;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -33,6 +30,7 @@ class DatabaseSeeder extends Seeder
 
 //        Desk::factory(10)->create();
 //        Card::factory(20)->create();
+        Task::factory(40)->create();
         // \App\Models\User::factory(10)->create();
     }
 }

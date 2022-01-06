@@ -27,9 +27,10 @@ class CardTest extends TestCase
     /**
      * @test
      */
-    public function create_a_card()
+    public function authenticated_user_can_create_a_card()
     {
         $user = User::first();
+
         $this->actingAs($user);
 
         $card = $user->desks()->first()->cards()->make([
@@ -52,10 +53,13 @@ class CardTest extends TestCase
 
         $this->actingAs($user);
 
-        $card = $user->desks->first();
+        $this->assertAuthenticatedAs($user);
+
+        $desk = $user->desks->first();
+        $card = $desk->cards()->first();
 
 
-        $this->getJson(route('desks.cards.show', [$card->id, $card->cards()->first()->id]))
+        $this->getJson(route('desks.cards.show', [$desk->id, $card->id]))
             ->assertSee($card->title)
             ->assertOk();
 

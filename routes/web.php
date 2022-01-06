@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\DeskController;
+use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +35,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('/', HomeController::class)->name('dashboard');
 
     Route::resources([
-        'desks'       => DeskController::class,
-//        'desks.cards' => CardController::class
+        'desks'             => DeskController::class,
+        'desks.cards'       => CardController::class,
+        'desks.cards.tasks' => TaskController::class
     ]);
 });
