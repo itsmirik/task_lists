@@ -23,7 +23,6 @@ class TaskController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-
         Task::create($request->validate([
             'title'       => 'required|string',
             'has_done'    => 'boolean',
@@ -32,5 +31,12 @@ class TaskController extends Controller
         ]));
 
         return \Redirect::to('/dashboard/desks');
+    }
+
+    public function show(Desk $desk, Card $card, Task $task): Factory|View|Application
+    {
+        $tasks = auth()->user()->desks()->whereId($desk->id)->first()->cards()->whereId($card->id)->first()->tasks()->whereId($task->id)->get();
+
+        return view('dashboard.tasks.show', compact('tasks'));
     }
 }

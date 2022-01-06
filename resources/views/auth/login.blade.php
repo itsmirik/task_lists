@@ -1,4 +1,3 @@
-{{--
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,23 +40,23 @@
                     @csrf
                     <div>
                         <label class="block text-gray-700">
-                            Login
+                            Email
                         </label>
-                        <input type="text" name="username" placeholder="Loginingizni kiriting"
+                        <input type="email" name="email" placeholder="Email:"
                                class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required>
-                        @if($errors->has('username'))
+                        @if($errors->has('email'))
                             <div class="text-red-500 flex py-1 border-0 rounded relative mb-4 mt-2">
                                 <img class="w-6 mr-2" src="{{asset('assets/images/cancel.svg')}} " alt="">
-                                    {{ $errors->first('username') }}
+                                    {{ $errors->first('email') }}
                             </div>
                         @endif
                     </div>
 
                     <div class="mt-4">
                         <label class="block text-gray-700">
-                            Parol
+                            Password
                         </label>
-                        <input type="password" name="password" placeholder="Parolingizni kiriting"
+                        <input type="password" name="password" placeholder="Password"
                                class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required>
                         @if($errors->has('password'))
                             <div class="text-red-500 flex py-1 border-0 rounded relative mb-4 mt-2">
@@ -68,7 +67,7 @@
                     </div>
 
                     <button type="submit" class="w-full block bg-blue-500 hover:bg-indigo-300 focus:bg-indigo-300 text-white font-semibold rounded-lg
-              px-4 py-3 mt-6">Tizimga kirish</button>
+              px-4 py-3 mt-6">Log In</button>
                 </form>
 
                 <hr class="my-6 border-gray-300 w-full">
@@ -78,8 +77,8 @@
 
 </body>
 </html>
---}}
 
+{{--
 <form action="{{route('auth.login-action')}}" method="post">
     @csrf
     <input type="email" name="email">
@@ -87,4 +86,4 @@
     <input type="password" name="password">
 
     <button type="submit">login</button>
-</form>
+</form>--}}

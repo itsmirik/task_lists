@@ -2,7 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Card;
+use App\Models\Desk;
 use App\Models\Task;
+use App\Models\User;
+use Hash;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,7 +18,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        /*User::create([
+        User::create([
             'id'       => 1,
             'name'     => 'Mirsaid',
             'email'    => 'akhmedovmirik@gmail.com',
@@ -26,10 +30,10 @@ class DatabaseSeeder extends Seeder
             'name'     => 'Developer',
             'email'    => 'developer@gmail.com',
             'password' => Hash::make('123123') //123123
-        ]);*/
+        ]);
 
-//        Desk::factory(10)->create();
-//        Card::factory(20)->create();
+        Desk::factory(10)->create();
+        Card::factory(20)->create();
         Task::factory(40)->create();
         // \App\Models\User::factory(10)->create();
     }

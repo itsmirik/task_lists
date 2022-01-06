@@ -37,7 +37,8 @@ class CardTest extends TestCase
             'title' => $this->faker->title
         ])->toArray();
 
-        $this->postJson(route('desks.cards.store', $user->desks->first()->id), $card)->assertCreated();
+        $this->postJson(route('desks.cards.store', $user->desks->first()->id), $card)
+            ->assertRedirect(route('desks.cards.index', $user->desks()->first()->id));
 
         $this->assertDatabaseHas('cards', $card);
     }

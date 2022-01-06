@@ -5,36 +5,43 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Card;
 use App\Models\Desk;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use LaravelIdea\Helper\App\Models\_IH_Card_C;
-use function auth;
 
 class CardController extends Controller
 {
     /**
      * @param Desk $desk
-     * @return Card[]|_IH_Card_C
+     * @return Application|Factory|View
      */
-    public function index(Desk $desk)
+    public function index(Desk $desk): View|Factory|Application
     {
-        return Card::whereDeskId($desk->id)->latest()->get();
+        $cards = auth()->user()->desks()->whereId($desk->id)->first()->cards()->get();
+
+        return view('dashboard.card.index', compact('cards'));
     }
 
-    public function store(Request $request): Card
+    public function store(Desk $desk, Card $card, Request $request): \Illuminate\Http\RedirectResponse
     {
-        return Card::create($request->validate([
+        auth()->user()->desks()->whereId($desk->id)->first()->cards()->create($request->validate([
             'title'   => 'required|string',
             'desk_id' => 'required|int'
         ]));
+
+        return \Redirect::route('desks.cards.index', $desk->id);
     }
 
     /**
      * @param Desk $desk
      * @param Card $card
-     * @return _IH_Card_C|Card[]
+     * @return Application|Factory|View
      */
-    public function show(Desk $desk, Card $card)
+    public function show(Desk $desk, Card $card): View|Factory|Application
     {
-        return auth()->user()->desks()->whereId($desk->id)->first()->cards()->whereId($card->id)->get();
+        $cards = auth()->user()->desks()->whereId($desk->id)->first()->cards()->whereId($card->id)->get();
+
+        return view('dashboard.card.show', compact('cards'));
     }
 }
