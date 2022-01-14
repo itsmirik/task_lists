@@ -5,43 +5,52 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Card;
 use App\Models\Desk;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Redirect;
 
 class CardController extends Controller
 {
     /**
      * @param Desk $desk
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index(Desk $desk): View|Factory|Application
+    public function index(Desk $desk): View
     {
-        $cards = auth()->user()->desks()->whereId($desk->id)->first()->cards()->get();
+        $this->authorize('edit', $desk);
 
-        return view('dashboard.card.index', compact('cards'));
+        return view('dashboard.card.index', [
+            'cards' => $desk->cards,
+        ]);
     }
 
-    public function store(Desk $desk, Card $card, Request $request): \Illuminate\Http\RedirectResponse
+    /**
+     * @throws AuthorizationException
+     */
+    public function store(Desk $desk, Card $card, Request $request): RedirectResponse
     {
-        auth()->user()->desks()->whereId($desk->id)->first()->cards()->create($request->validate([
-            'title'   => 'required|string',
-            'desk_id' => 'required|int'
+        $this->authorize('edit', [$desk, $card]);
+
+        $desk->cards()->create($request->validate([
+            'title' => 'required|string',
         ]));
 
-        return \Redirect::route('desks.cards.index', $desk->id);
+        return Redirect::route('desks.cards.index', $desk->id);
     }
 
     /**
      * @param Desk $desk
      * @param Card $card
-     * @return Application|Factory|View
+     * @return View
+     * @throws AuthorizationException
      */
-    public function show(Desk $desk, Card $card): View|Factory|Application
+    public function show(Desk $desk, Card $card): View
     {
-        $cards = auth()->user()->desks()->whereId($desk->id)->first()->cards()->whereId($card->id)->get();
+        $this->authorize('edit', $card);
 
-        return view('dashboard.card.show', compact('cards'));
+        return view('dashboard.card.show', compact('card'));
     }
 }

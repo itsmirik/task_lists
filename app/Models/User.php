@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Desk::class);
     }
+
+    public function hasAccessToDesk(Desk $desk): void
+    {
+        abort_unless(auth()->id == $desk->id, 403);
+    }
 }

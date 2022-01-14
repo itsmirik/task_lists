@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index(Desk $desk, Card $card): Factory|View|Application
+    public function index(Desk $desk, Card $card): View
     {
         $tasks = auth()->user()->desks()->whereId($desk->id)->first()->cards()->whereId($card->id)->first()->tasks;
 

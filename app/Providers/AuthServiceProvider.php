@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Card;
+use App\Models\Desk;
+use App\Policies\CardPolicy;
+use App\Policies\DeskPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,6 +18,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Card::class => CardPolicy::class,
+        Desk::class => DeskPolicy::class,
     ];
 
     /**

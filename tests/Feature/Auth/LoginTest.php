@@ -13,15 +13,28 @@ class LoginTest extends TestCase
      */
     public function authenticating_user()
     {
-        $this->withExceptionHandling();
         Auth::logout();
+
         $data = [
             'email'    => 'akhmedovmirik@gmail.com',
             'password' => '123123'
         ];
+
         $this->postJson(route('auth.login-action', $data))
             ->assertRedirect(route('dashboard'));
 
         $this->assertAuthenticatedAs(User::first());
+    }
+
+    /**
+     * @test
+     */
+    public function is_user_authenticated()
+    {
+        $user = User::first();
+
+        $this->actingAs($user);
+
+        $this->assertAuthenticatedAs($user);
     }
 }

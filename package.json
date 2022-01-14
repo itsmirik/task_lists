@@ -13,6 +13,10 @@
         "axios": "^0.21",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.1.14",
+        "tailwindcss": "^2.2.19"
+    },
+    "dependencies": {
+        "tailwind": "^4.0.0"
     }
 }

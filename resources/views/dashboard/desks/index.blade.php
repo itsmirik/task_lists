@@ -1,5 +1,5 @@
 @foreach($desks as $desk)
-    <table>
+    <table class="container">
         <tr>
             <td>{{$desk->title}}</td>
         </tr>
